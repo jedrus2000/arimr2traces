@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>AboutDialog</class>
+ <widget class="QDialog" name="AboutDialog">
+  <property name="windowModality">
+   <enum>Qt::ApplicationModal</enum>
+  </property>
+  <property name="enabled">
+   <bool>true</bool>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>442</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>442</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>442</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="baseSize">
+   <size>
+    <width>442</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>O programie</string>
+  </property>
+  <property name="locale">
+   <locale language="Polish" country="Poland"/>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>false</bool>
+  </property>
+  <property name="modal">
+   <bool>true</bool>
+  </property>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>0</y>
+     <width>421</width>
+     <height>231</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt; font-weight:600;&quot;&gt;armir2traces&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Autor: Andrzej Bargański&lt;/p&gt;&lt;p&gt;e-mail : &lt;a href=&quot;mailto:a.barganski@gmail.com&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;a.barganski@gmail.com&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;www : &lt;a href=&quot;https://www.barganski.pl/andrzej/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://www.barganski.pl/andrzej/&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;strona i źródła programu : &lt;a href=&quot;https://github.com/jedrus2000/armir2traces&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;https://github.com/jedrus2000/armir2traces&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;Program do pobierania danych o zwierzętach ze strony &lt;a href=&quot;https://giw.doplaty.gov.pl/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;ARiMR&lt;/span&gt;&lt;/a&gt;&lt;br/&gt;na potrzeby tworzenia dokumentów w systemie &lt;a href=&quot;https://webgate.ec.europa.eu/sanco/traces/security/askLogin.do&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;TRACES&lt;/span&gt;&lt;/a&gt;.&lt;br/&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Program nie zapisuje danych logowania.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Licencja: &lt;a href=&quot;https://github.com/jedrus2000/armir2traces/blob/master/LICENSE&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;MIT&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="closePushButton">
+   <property name="geometry">
+    <rect>
+     <x>175</x>
+     <y>260</y>
+     <width>90</width>
+     <height>28</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Zamknij</string>
+   </property>
+   <property name="default">
+    <bool>true</bool>
+   </property>
+   <property name="flat">
+    <bool>false</bool>
+   </property>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
