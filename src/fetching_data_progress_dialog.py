@@ -2,6 +2,8 @@
 from PyQt5.QtWidgets import QDialog
 from PyQt5 import uic
 
+from .resources.resources import FETCHING_DATA_PROGRESS_DIALOG_FORM
+
 
 class FetchingDataProgressDialog(QDialog):
     """
@@ -10,7 +12,7 @@ class FetchingDataProgressDialog(QDialog):
     """
     def __init__(self, parent=None):
         QDialog.__init__(self, parent)
-        uic.loadUi('./forms/fetching_data_progress_dialog.ui', self)
+        uic.loadUi(FETCHING_DATA_PROGRESS_DIALOG_FORM, self)
         self.cancelButton.clicked.connect(self.reject)
 
     def setProgressValue(self, value):

@@ -5,14 +5,16 @@ import os
 from PyQt5.QtWidgets import QApplication, QMainWindow, QFileDialog, \
     QDesktopWidget, QMessageBox
 from PyQt5 import uic
+from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
-from animal import *
-from animals_ids_qtable_model import *
-from armir_data_qtable_model import *
-from animals_fetch_thread import AnimalFetchThread
-from about_dialog import AboutDialog
-from arimr_login import ARIMRLoginDialog
-from fetching_data_progress_dialog import FetchingDataProgressDialog
+from .animal import *
+from .animals_ids_qtable_model import *
+from .armir_data_qtable_model import *
+from .animals_fetch_thread import AnimalFetchThread
+from .about_dialog import AboutDialog
+from .arimr_login import ARIMRLoginDialog
+from .fetching_data_progress_dialog import FetchingDataProgressDialog
+from .resources.resources import MAIN_WINDOW_FORM, APP_XPM_ICON
 
 
 class App(QMainWindow):
@@ -22,7 +24,8 @@ class App(QMainWindow):
     """
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
-        uic.loadUi('./forms/main_window.ui', self)
+        uic.loadUi(MAIN_WINDOW_FORM, self)
+        self.setWindowIcon(QIcon(APP_XPM_ICON))
         #
         self.resetOrInitData()
         self.idNumbersTableView.setModel(self.animalIDsModel)
@@ -226,7 +229,9 @@ class App(QMainWindow):
     def saveDataPushButton_on_click(self):
         self.saveData()
 
-if __name__ == '__main__':
+
+def main():
     app = QApplication(sys.argv)
     ex = App()
     sys.exit(app.exec_())
+

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from PyQt5.QtCore import QAbstractTableModel, Qt, QSize, QVariant, QModelIndex
+from PyQt5.QtCore import QAbstractTableModel, Qt, QVariant, QModelIndex
 from typing import List
 
-from animal import Animal
-from armir_data import save_report_file, save_traces_file
+from .animal import Animal
+from .armir_data import save_report_file, save_traces_file
 
 header = ['Nr stada', 'Nr identyfikatora', 'Status pobierania danych', 'Nr paszportu', 'Status paszportu',
           'Wiek (m)', 'Gatunek',

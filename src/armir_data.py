@@ -7,7 +7,7 @@ import hashlib
 import requests
 import codecs
 from lxml import html
-from animal import *
+from .animal import *
 from datetime import datetime
 from typing import List
 

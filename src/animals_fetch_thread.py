@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from armir_data import *
+from .armir_data import *
 
 
 class AnimalFetchThread(QThread):
