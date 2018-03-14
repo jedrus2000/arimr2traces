@@ -26,7 +26,7 @@ def get_texts_list_from_tags(tags):
     return [''.join(t.itertext()).strip() for t in tags]
 
 
-class ArmirDataExtractor(object):
+class ArimrDataExtractor(object):
     """
     Class to extract data from ARiMR website and based on this creates Animal objects
 

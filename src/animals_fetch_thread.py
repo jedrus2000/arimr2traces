@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt5.QtCore import QThread, pyqtSignal
 
-from .armir_data import *
+from .arimr_data import *
 
 
 class AnimalFetchThread(QThread):
@@ -10,7 +10,7 @@ class AnimalFetchThread(QThread):
 
     """
     animal_fetched = pyqtSignal("PyQt_PyObject", name='animalFetched')
-    armir_login_failed = pyqtSignal(name='armirLoginFailed')
+    arimr_login_failed = pyqtSignal(name='arimrLoginFailed')
     animals_fetching_finished = pyqtSignal(bool, name='animalsFetchingFinished')
     set_progress_value = pyqtSignal(int, name='setProgressValue')
 
@@ -36,11 +36,11 @@ class AnimalFetchThread(QThread):
 
         :return:
         """
-        armir_data_extractor = ArmirDataExtractor()
-        if armir_data_extractor.login(self.username, self.password):
+        arimr_data_extractor = ArimrDataExtractor()
+        if arimr_data_extractor.login(self.username, self.password):
             cnt = 0
             finish_result = True
-            for animal in armir_data_extractor.get_animals_from_ids_list(self.animal_ids_list):
+            for animal in arimr_data_extractor.get_animals_from_ids_list(self.animal_ids_list):
                 self.animal_fetched.emit(animal)
                 cnt += 1
                 self.set_progress_value.emit(cnt)
@@ -50,4 +50,4 @@ class AnimalFetchThread(QThread):
                     break
             self.animals_fetching_finished.emit(finish_result)
         else:
-            self.armir_login_failed.emit()
+            self.arimr_login_failed.emit()

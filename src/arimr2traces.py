@@ -9,7 +9,7 @@ from PyQt5.QtGui import QIcon
 from PyQt5.QtCore import pyqtSlot
 from .animal import *
 from .animals_ids_qtable_model import *
-from .armir_data_qtable_model import *
+from .arimr_data_qtable_model import *
 from .animals_fetch_thread import AnimalFetchThread
 from .about_dialog import AboutDialog
 from .arimr_login import ARIMRLoginDialog
@@ -29,7 +29,7 @@ class App(QMainWindow):
         #
         self.resetOrInitData()
         self.idNumbersTableView.setModel(self.animalIDsModel)
-        self.armirDataTableView.setModel(self.armirModel)
+        self.arimrDataTableView.setModel(self.arimrModel)
         #
         self.actionAboutProgram.triggered.connect(self.actionAboutProgram_click)
         self.actionExit.triggered.connect(self.close)
@@ -38,7 +38,7 @@ class App(QMainWindow):
         self.menubar.addAction(self.actionExit)
         #
         self.readIDsPushButton.clicked.connect(self.readIDsPushButton_on_click)
-        self.getDataFromARMIRPushButton.clicked.connect(self.getDataFromARMIRPushButton_on_click)
+        self.getDataFromARIMRPushButton.clicked.connect(self.getDataFromARIMRPushButton_on_click)
         self.saveDataPushButton.clicked.connect(self.saveDataPushButton_on_click)
         #
         self.setComponentsBeforeIDsLoaded()
@@ -56,7 +56,7 @@ class App(QMainWindow):
         self.tracesFileName = ''
         self.reportFileName = ''
         self.animalIDsModel = AnimalIDsModel(self)
-        self.armirModel = ArmirDataModel(self.armirDataTableView)
+        self.arimrModel = ArimrDataModel(self.arimrDataTableView)
 
 
     def center(self):
@@ -75,15 +75,15 @@ class App(QMainWindow):
         Sets controlers state before IDs list is loaded, so everything is disabled
         :return:
         '''
-        self.getDataFromARMIRPushButton.setEnabled(False)
-        self.armirDataTableView.setEnabled(False)
+        self.getDataFromARIMRPushButton.setEnabled(False)
+        self.arimrDataTableView.setEnabled(False)
         self.saveReportCheckBox.setEnabled(False)
         self.saveTracesCheckBox.setEnabled(False)
         self.saveDataPushButton.setEnabled(False)
 
-    def enableAndSetControlsForARMIRDataDownload(self):
-        self.getDataFromARMIRPushButton.setEnabled(True)
-        self.armirDataTableView.setEnabled(True)
+    def enableAndSetControlsForARIMRDataDownload(self):
+        self.getDataFromARIMRPushButton.setEnabled(True)
+        self.arimrDataTableView.setEnabled(True)
         self.saveReportCheckBox.setEnabled(True)
         self.saveTracesCheckBox.setEnabled(True)
 
@@ -115,12 +115,12 @@ class App(QMainWindow):
             if self.saveTracesCheckBox.isChecked():
                 self.tracesFileName = self.saveFileAsWithDialog('Zapisz plik w formacie TRACES', self.tracesFileName)
                 if self.tracesFileName:
-                    self.armirModel.saveTracesFile(self.tracesFileName)
+                    self.arimrModel.saveTracesFile(self.tracesFileName)
 
             if self.saveReportCheckBox.isChecked():
                 self.reportFileName = self.saveFileAsWithDialog('Zapisz plik raportu w formacie CSV', self.reportFileName)
                 if self.reportFileName:
-                    self.armirModel.saveReportFile(self.reportFileName)
+                    self.arimrModel.saveReportFile(self.reportFileName)
 
             self.dataNeedSave = False
         except IOError as e:
@@ -172,10 +172,10 @@ class App(QMainWindow):
         if file_name and self.loadAnimalsIDsListFromFile(file_name):
             self.animalIDsFileName = file_name
             self.createReportAndTracesFileNames()
-            self.enableAndSetControlsForARMIRDataDownload()
+            self.enableAndSetControlsForARIMRDataDownload()
 
     @pyqtSlot()
-    def getDataFromARMIRPushButton_on_click(self):
+    def getDataFromARIMRPushButton_on_click(self):
         self.checkAndAskForSavingData()
 
         dlg = ARIMRLoginDialog(self)
@@ -183,11 +183,11 @@ class App(QMainWindow):
 
         if res:
             # reset old data before fetching new
-            self.armirModel.resetModel()
+            self.arimrModel.resetModel()
             #
-            fdd = FetchingDataProgressDialog(self)
-            fdd.progressBar.setRange(0, len(self.animalIDsModel.listOfAnimalsIDs))
-            fdd.progressBar.setValue(0)
+            self.fdd = FetchingDataProgressDialog(self)
+            self.fdd.progressBar.setRange(0, len(self.animalIDsModel.listOfAnimalsIDs))
+            self.fdd.progressBar.setValue(0)
 
             username = dlg.loginLineEdit.text()
             password = dlg.passwordLineEdit.text()
@@ -195,12 +195,12 @@ class App(QMainWindow):
             self.fetch_thread = AnimalFetchThread(self.animalIDsModel.listOfAnimalsIDs,
                                                   username, password)
 
-            self.fetch_thread.set_progress_value.connect(fdd.setProgressValue)
+            self.fetch_thread.set_progress_value.connect(self.fdd.setProgressValue)
             self.fetch_thread.animal_fetched.connect(self.animalFetched)
-            self.fetch_thread.armir_login_failed.connect(self.armirLoginFailed)
+            self.fetch_thread.arimr_login_failed.connect(self.arimrLoginFailed)
             self.fetch_thread.animals_fetching_finished.connect(self.animalsFetchingFinished)
             self.fetch_thread.start()
-            fdd_res = fdd.exec()
+            fdd_res = self.fdd.exec()
             # check if user clicked cancel button
             if not fdd_res:
                 self.fetch_thread.requestInterruption()
@@ -220,10 +220,11 @@ class App(QMainWindow):
         msg.exec()
 
     def animalFetched(self, animal):
-        self.armirModel.addRow(animal)
+        self.arimrModel.addRow(animal)
 
-    def armirLoginFailed(self):
+    def arimrLoginFailed(self):
         self.showErrorMsgBox('Błąd logowania.', 'Wystąpił błąd logowania. Sprawdź poprawność danych logowania.')
+        self.fdd.close()
 
     @pyqtSlot()
     def saveDataPushButton_on_click(self):
