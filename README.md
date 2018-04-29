@@ -1,4 +1,7 @@
 ![](arimr2traces/resources/sheep.ico) 
+
+<img src="/jedrus2000/arimr2traces/raw/master/arimr2traces/resources/sheep.ico" height="48px" width="48px>
+
 # arimr2traces
 
 #### O programie
