@@ -1,3 +1,3 @@
 if __name__ == '__main__':
-    from src.arimr2traces import main
+    from arimr2traces.main import main
     main()
