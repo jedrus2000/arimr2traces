@@ -1,4 +1,4 @@
-# arimr2traces
+![](arimr2traces/resources/sheep.xpm) # arimr2traces
 
 #### O programie
 
@@ -32,4 +32,7 @@ Dla osób obeznanych z Python'em do projektu załączony jest plik requiremnts.t
 Program korzysta z Pythona 3.6, biblioteki PyQT5 i lxml.
 Instalator został wykonany przy użyciu: [pynsist](https://github.com/takluyver/pynsist)
 Plik instalatora wykonalny buduje się komendą: `pynsist installer.cfg`
-Można też użyć [PyInstaller](http://www.pyinstaller.org/) do stworzenie pliky uruchamialnego `pyinstaller --add-data arimr2traces/resources:arimr2traces/resources --distpath ./output --workpath ./build --clean --windowed --onefile run.py --name arimr2traces -i arimr2traces/resources/sheep.ico`
+Można też użyć [PyInstaller](http://www.pyinstaller.org/) do stworzenie pliku uruchamialnego: `pyinstaller --add-data arimr2traces/resources:arimr2traces/resources --distpath ./output --workpath ./build --clean --windowed --onefile run.py --name arimr2traces -i arimr2traces/resources/sheep.ico`
+
+#### Komponenty użyte
+Ikonka jest autorstwa [Martina Berube](http://www.softicons.com/animal-icons/animal-icons-by-martin-berube)
