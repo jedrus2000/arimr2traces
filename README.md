@@ -1,4 +1,5 @@
-![](arimr2traces/resources/sheep.xpm) # arimr2traces
+<a href="url"><img src="https://github.com/jedrus2000/arimr2traces/raw/master/arimr2traces/resources/sheep.ico" align="left" height="48" ></a>
+# arimr2traces
 
 #### O programie
 
