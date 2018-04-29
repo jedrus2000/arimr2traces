@@ -1,4 +1,5 @@
-![](arimr2traces/resources/sheep.xpm) # arimr2traces
+![](arimr2traces/resources/sheep.ico) 
+# arimr2traces
 
 #### O programie
 
