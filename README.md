@@ -27,12 +27,14 @@ Instalator automatycznie instaluje wszystkie komponenty konieczne do uruchomieni
 
 ##### Dla zaawansowanych :)
 Dla osób obeznanych z Python'em do projektu załączony jest plik requiremnts.txt który zawiera wszystkie komponenty konieczne do zainstalowania przez pip.
+Program wymaga Python 3.5 lub nowszego. Uruchamia się: `python run.py`
 
 
 #### Informacje techniczne o programie
 Program korzysta z Pythona 3.6, biblioteki PyQT5 i lxml.
 Instalator został wykonany przy użyciu: [pynsist](https://github.com/takluyver/pynsist)
 Plik instalatora wykonalny buduje się komendą: `pynsist installer.cfg`
+
 Można też użyć [PyInstaller](http://www.pyinstaller.org/) do stworzenie pliku uruchamialnego: `pyinstaller --add-data arimr2traces/resources:arimr2traces/resources --distpath ./output --workpath ./build --clean --windowed --onefile run.py --name arimr2traces -i arimr2traces/resources/sheep.ico`
 
 #### Komponenty użyte
