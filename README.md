@@ -37,5 +37,4 @@ Plik instalatora wykonalny buduje się komendą: `pynsist installer.cfg`
 
 Można też użyć [PyInstaller](http://www.pyinstaller.org/) do stworzenie pliku uruchamialnego: `pyinstaller --add-data arimr2traces/resources:arimr2traces/resources --distpath ./output --workpath ./build --clean --windowed --onefile run.py --name arimr2traces -i arimr2traces/resources/sheep.ico`
 
-#### Komponenty użyte
 Ikonka jest autorstwa [Martina Berube](http://www.softicons.com/animal-icons/animal-icons-by-martin-berube)
