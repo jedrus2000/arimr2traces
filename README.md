@@ -1,4 +1,4 @@
-<a href=""><img src="https://github.com/jedrus2000/arimr2traces/raw/master/arimr2traces/resources/sheep.ico" align="left" height="48" ></a>
+<a href="https://github.com/jedrus2000/arimr2traces/"><img src="https://github.com/jedrus2000/arimr2traces/raw/master/arimr2traces/resources/sheep.ico" align="left" height="48" ></a>
 # arimr2traces
 
 #### O programie
