@@ -27,7 +27,7 @@ Instalator automatycznie instaluje wszystkie komponenty konieczne do uruchomieni
 
 ##### Dla zaawansowanych :)
 Dla osób obeznanych z Python'em do projektu załączony jest plik requiremnts.txt który zawiera wszystkie komponenty konieczne do zainstalowania przez pip.
-Program wymaga Python 3.5 lub nowszego. Uruchamia się: `python run.py`
+Program wymaga Python 3.6 lub nowszego. Uruchamia się: `python run.py`
 
 
 #### Informacje techniczne o programie
