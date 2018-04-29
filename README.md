@@ -1,4 +1,4 @@
-![](arimr2traces/resources/sheep.ico) 
+![](arimr2traces/resources/sheep.ico =48x48) 
 # arimr2traces
 
 #### O programie
