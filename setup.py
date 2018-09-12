@@ -13,8 +13,8 @@ with open('LICENSE') as f:
 
 setup(
     name='arimr2traces',
-    version='1.0.0',
-    description='Downloads data from ARiMR foe usage in TRACES',
+    version='1.1.0',
+    description='Downloads data from ARiMR for usage in TRACES',
     long_description=readme,
     author='Andrzej Bargański',
     author_email='a.barganski@gmail.com',

@@ -7,9 +7,13 @@ import hashlib
 import requests
 import codecs
 from lxml import html
-from .animal import *
 from datetime import datetime
 from typing import List
+from openpyxl import Workbook
+from openpyxl.worksheet.dimensions import ColumnDimension
+from openpyxl.utils import get_column_letter
+
+from .animal import *
 
 
 URL_WITH_PARAM = 'https://giw.doplaty.gov.pl/%s'
@@ -152,20 +156,7 @@ class ArimrDataExtractor(object):
             yield self._get_animal_data(animal_id)
 
 
-
-def save_report_file(report_file_name, animals_list: List[Animal]):
-    """
-    Saves report file in CSV with needed data.
-
-    :param report_file_name:
-    :param animals_list:
-    :return:
-    """
-    now = datetime.now()
-    dt_of_fetching_data = now.strftime('%Y-%m-%d %H:%M:%S')
-    header = ['Lp', 'Nr stada', 'Nr identyfikatora', 'Status pobierania danych', 'Nr paszportu', 'Status paszportu',
-                       'Wiek (m)', 'Gatunek',
-                       'Plec', 'Rasa', 'Typ użytkowy', 'Status', 'Data urodzenia', 'Stan zdarzeń']
+def _save_report_file_as_csv(report_file_name, dt_of_fetching_data, header, animals_list, now):
     fd = codecs.open(report_file_name, 'w', 'utf-8-sig')
     try:
         writer = csv.writer(fd, dialect='excel', quotechar='"', quoting=csv.QUOTE_ALL)
@@ -183,6 +174,62 @@ def save_report_file(report_file_name, animals_list: List[Animal]):
             i += 1
     finally:
         fd.close()
+
+
+def _save_report_file_as_excel(report_file_name, dt_of_fetching_data, header, animals_list, now):
+    wb = Workbook()
+    ws = wb.active
+    row = 1
+    col = 1
+    # date
+    ws.cell(column=1, row=row, value='Data pobrania danych: %s' % dt_of_fetching_data)
+    # header
+    row += 1
+    for header_elem in header:
+        ws.cell(column=col, row=row, value=header_elem)
+        col += 1
+    # values
+    row += 1
+    cnt = 1
+    for animal in animals_list:
+        col = 1
+        values = [cnt, animal.herd_id, animal.animal_id, animal.process_status, animal.passport_id,
+               animal.passport_status,
+               animal.age_in_months(now), animal.species, animal.sex, animal.breed,
+               animal.typ_uzyt, animal.status, animal.birth_date]
+        for value in values:
+            ws.cell(column=col, row=row, value=value)
+            col += 1
+        row += 1
+        cnt += 1
+
+    for col in range(1, 10):
+        col_letter = get_column_letter(col)
+        ws.column_dimensions[col_letter] = ColumnDimension(ws, customWidth=True)
+        ws.column_dimensions[col_letter].width = 24
+
+    wb.save(report_file_name)
+
+
+def save_report_file(report_file_name, animals_list: List[Animal], output_format='excel'):
+    """
+    Saves report file in CSV with needed data.
+
+    :param report_file_name:
+    :param animals_list:
+    :param output_format:
+    
+    :return:
+    """
+    now = datetime.now()
+    dt_of_fetching_data = now.strftime('%Y-%m-%d %H:%M:%S')
+    header = ['Lp', 'Nr stada', 'Nr identyfikatora', 'Status pobierania danych', 'Nr paszportu', 'Status paszportu',
+                       'Wiek (m)', 'Gatunek',
+                       'Plec', 'Rasa', 'Typ użytkowy', 'Status', 'Data urodzenia', 'Stan zdarzeń']
+    if output_format == 'excel':
+        _save_report_file_as_excel(report_file_name, dt_of_fetching_data, header, animals_list, now)
+    else:
+        _save_report_file_as_csv(report_file_name, dt_of_fetching_data, header, animals_list, now)
 
 
 def save_traces_file(traces_file_name, animals_list: List[Animal]):

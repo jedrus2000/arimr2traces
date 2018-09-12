@@ -93,7 +93,7 @@ class App(QMainWindow):
 
         file_name_without_ext = os.path.splitext(self.animalIDsFileName)[0]
         path, file = os.path.split(os.path.abspath(file_name_without_ext))
-        self.reportFileName = os.path.join(path, file+'_report.csv')
+        self.reportFileName = os.path.join(path, file+'_report.xlsx')
         self.tracesFileName = os.path.join(path, file+'_traces.csv')
 
     def loadAnimalsIDsListFromFile(self, file_name):
@@ -118,7 +118,7 @@ class App(QMainWindow):
                     self.arimrModel.saveTracesFile(self.tracesFileName)
 
             if self.saveReportCheckBox.isChecked():
-                self.reportFileName = self.saveFileAsWithDialog('Zapisz plik raportu w formacie CSV', self.reportFileName)
+                self.reportFileName = self.saveFileAsWithDialog('Zapisz plik raportu w formacie Excela', self.reportFileName)
                 if self.reportFileName:
                     self.arimrModel.saveReportFile(self.reportFileName)
 
