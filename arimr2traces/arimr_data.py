@@ -35,11 +35,18 @@ class ArimrDataExtractor(object):
     Class to extract data from ARiMR website and based on this creates Animal objects
 
     """
+
     def __init__(self):
         self.login_payload = {}
         self.animal_list = list()
         self.session = requests.Session()
         self.logged_in = False
+
+        self.create_animal_events_calls = {
+            ANIMAL_SPECIES_CATTLE: self._create_animal_events_for_cattle,
+            ANIMAL_SPECIES_SHEEP: self._create_animal_events_for_sheep
+        }
+
 
     def login(self, username, password):
         """
@@ -77,18 +84,36 @@ class ArimrDataExtractor(object):
                 passport_status = passport_data_texts[17]
         return passport_id, passport_status
 
-    def _create_animal_events(self, animal_data_texts):
+    def _create_animal_events_for_cattle(self, animal_data_texts):
         """
-        gets animal's events
+        gets cattle's events
+
+        :param animal_data_texts:
+        :return:
+        """
+        i = 9
+        while i < len(animal_data_texts):
+            animal_event = AnimalEvent(typ_zdarzenie=animal_data_texts[i + 1], nr_w_oznakowaniu=animal_data_texts[i + 2],
+                                       nr_siedziby=animal_data_texts[i + 3], data_zdarzenia=animal_data_texts[i + 4],
+                                       stan_zdarzenia=animal_data_texts[i + 5],
+                                       # liczba_zwierzat_w_zgloszeniu=animal_data_texts[i + 6],
+                                       nr_siedziby_stad_kompl=animal_data_texts[i + 7], uwagi=animal_data_texts[i + 8])
+            yield animal_event
+            i += 9
+
+    def _create_animal_events_for_sheep(self, animal_data_texts):
+        """
+        gets sheep's events
 
         :param animal_data_texts:
         :return:
         """
         i = 8
         while i < len(animal_data_texts):
-            animal_event = AnimalEvent(animal_data_texts[i + 1], animal_data_texts[i + 2], animal_data_texts[i + 3],
-                                    animal_data_texts[i + 4], animal_data_texts[i + 5], animal_data_texts[i + 6],
-                                    animal_data_texts[i + 7])
+            animal_event = AnimalEvent(typ_zdarzenie=animal_data_texts[i + 1], nr_w_oznakowaniu=animal_data_texts[i + 2],
+                nr_siedziby=animal_data_texts[i + 3], data_zdarzenia=animal_data_texts[i + 4],
+                stan_zdarzenia=animal_data_texts[i + 5], nr_siedziby_stad_kompl=animal_data_texts[i + 6],
+                uwagi=animal_data_texts[i + 7])
             yield animal_event
             i += 8
 
@@ -138,7 +163,7 @@ class ArimrDataExtractor(object):
                                   animal_data_list[8], animal_data_list[9], animal_data_list[10], animal_data_list[11],
                                   animal_data_list[12], animal_data_list[13], passport_id, passport_status, herd_id)
                 #
-                for animal_event in self._create_animal_events(events_data_texts):
+                for animal_event in self.create_animal_events_calls[animal.species](events_data_texts):
                     animal.events_list.append(animal_event)
                 animal.process_status = ANIMAL_OK
             except:
@@ -167,9 +192,8 @@ def _save_report_file_as_csv(report_file_name, dt_of_fetching_data, header, anim
             row = [i, animal.herd_id, animal.animal_id, animal.process_status, animal.passport_id,
                    animal.passport_status,
                    animal.age_in_months(now), animal.species, animal.sex, animal.breed,
-                   animal.typ_uzyt, animal.status, animal.birth_date]
+                   animal.typ_uzyt, animal.status, animal.birth_date, animal.get_animal_events_states_text()]
             #
-            row.append(animal.get_animal_events_states_text())
             writer.writerow(row)
             i += 1
     finally:
@@ -196,7 +220,7 @@ def _save_report_file_as_excel(report_file_name, dt_of_fetching_data, header, an
         values = [cnt, animal.herd_id, animal.animal_id, animal.process_status, animal.passport_id,
                animal.passport_status,
                animal.age_in_months(now), animal.species, animal.sex, animal.breed,
-               animal.typ_uzyt, animal.status, animal.birth_date]
+               animal.typ_uzyt, animal.status, animal.birth_date, animal.get_animal_events_states_text()]
         for value in values:
             ws.cell(column=col, row=row, value=value)
             col += 1
