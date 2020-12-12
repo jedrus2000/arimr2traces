@@ -218,7 +218,7 @@ def save_report_file(report_file_name, animals_list: List[Animal], output_format
     :param report_file_name:
     :param animals_list:
     :param output_format:
-    
+
     :return:
     """
     now = datetime.now()
@@ -246,7 +246,7 @@ def save_traces_file(traces_file_name, animals_list: List[Animal]):
             writer = csv.writer(fd, dialect='excel', delimiter=';', quoting=csv.QUOTE_NONE)
             writer.writerow(['[COLUMNS]'])
             writer.writerow(['official_ident', 'numpassportemp'])
-            writer.writerow([''])
+            writer.writerow([])
             writer.writerow(['[DATA]'])
             for animal in animals_list:
                 row = [animal.animal_id, animal.passport_id]
