@@ -114,5 +114,5 @@ def read_list_of_ids(file_name):
     with open(file_name) as csvfile:
         csvreader = csv.DictReader(csvfile, fieldnames=['animal_id'])
         for row in csvreader:
-            ids_list.append(row['animal_id'])
+            ids_list.append(row['animal_id'].strip())
     return ids_list
